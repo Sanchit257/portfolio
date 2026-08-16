@@ -25,7 +25,7 @@ function TelemetryFeed() {
     "[system] > Memory integrity check: 0 errors found",
     "[vulnerability] > Running Nmap scan... 42% complete",
     "[tunnel] > Data Bridge connection established via secure WS",
-    "[auth] > Successful login: user 'rohit' from local terminal",
+    "[auth] > Successful login: user 'sanchit' from local terminal",
     "[kernel] > Monitoring system entropy for crypto ops",
     "[threat_intel] > Synchronizing global threat signatures... [DONE]",
     "[heartbeat] > Node status: 0 packets dropped | Latency: 12ms",
