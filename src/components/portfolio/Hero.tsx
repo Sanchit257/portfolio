@@ -170,7 +170,7 @@ export function Hero() {
             />
           </div>
           <div className="absolute top-10 -left-6 bg-black border border-[var(--color-neon-pink)] px-4 py-1.5 z-30 font-mono text-[var(--color-neon-pink)] text-sm tracking-widest uppercase">
-            RHCSA // VALID
+            CERTIFIED
           </div>
         </motion.div>
       </div>
