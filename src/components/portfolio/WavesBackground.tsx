@@ -85,13 +85,9 @@ export function WavesBackground() {
   const animRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const elements = SECTION_ORDER.map((id) =>
-      document.getElementById(id),
-    ).filter((el): el is HTMLElement => el != null);
-
-    if (elements.length === 0) return;
-
-    const ratios = new Map<string, number>();
+    let cancelled = false;
+    let observer: IntersectionObserver | null = null;
+    let retryId = 0;
 
     const tick = () => {
       const cur = displayRef.current;
@@ -119,28 +115,46 @@ export function WavesBackground() {
       }
     };
 
-    const updateTarget = () => {
-      targetRef.current = blendFromRatios(ratios);
-      ensureAnimating();
+    const attach = () => {
+      if (cancelled) return;
+      const elements = SECTION_ORDER.map((id) =>
+        document.getElementById(id),
+      ).filter((el): el is HTMLElement => el != null);
+
+      if (elements.length === 0) {
+        retryId = window.setTimeout(attach, 100);
+        return;
+      }
+
+      const ratios = new Map<string, number>();
+
+      const updateTarget = () => {
+        targetRef.current = blendFromRatios(ratios);
+        ensureAnimating();
+      };
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            ratios.set(entry.target.id, entry.intersectionRatio);
+          }
+          updateTarget();
+        },
+        {
+          threshold: Array.from({ length: 21 }, (_, i) => i / 20),
+          rootMargin: "-15% 0px -25% 0px",
+        },
+      );
+
+      for (const el of elements) observer.observe(el);
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          ratios.set(entry.target.id, entry.intersectionRatio);
-        }
-        updateTarget();
-      },
-      {
-        threshold: Array.from({ length: 21 }, (_, i) => i / 20),
-        rootMargin: "-15% 0px -25% 0px",
-      },
-    );
-
-    for (const el of elements) observer.observe(el);
+    attach();
 
     return () => {
-      observer.disconnect();
+      cancelled = true;
+      window.clearTimeout(retryId);
+      observer?.disconnect();
       if (animRef.current != null) cancelAnimationFrame(animRef.current);
     };
   }, []);

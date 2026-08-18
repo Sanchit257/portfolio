@@ -247,21 +247,6 @@ export default function TargetCursor({
       spinTl.current?.pause();
       gsap.set(cursorRef.current, { rotation: 0 });
 
-      if (cursorColorOnTarget) {
-        gsap.to(corners, {
-          borderColor: cursorColorOnTarget,
-          duration: 0.15,
-          ease: "power2.out",
-        });
-        if (dotRef.current) {
-          gsap.to(dotRef.current, {
-            backgroundColor: cursorColorOnTarget,
-            duration: 0.15,
-            ease: "power2.out",
-          });
-        }
-      }
-
       const rect = target.getBoundingClientRect();
       const { borderWidth, cornerSize } = constants;
       const { x: offsetX, y: offsetY } = getOffset();
@@ -312,21 +297,6 @@ export default function TargetCursor({
         targetCornerPositionsRef.current = null;
         gsap.set(activeStrengthRef.current, { current: 0, overwrite: true });
         activeTarget = null;
-
-        if (cursorColorOnTarget && cornersRef.current) {
-          gsap.to(Array.from(cornersRef.current), {
-            borderColor: cursorColor,
-            duration: 0.15,
-            ease: "power2.out",
-          });
-          if (dotRef.current) {
-            gsap.to(dotRef.current, {
-              backgroundColor: cursorColor,
-              duration: 0.15,
-              ease: "power2.out",
-            });
-          }
-        }
 
         if (cornersRef.current) {
           const cornerEls = Array.from(cornersRef.current);
@@ -426,8 +396,6 @@ export default function TargetCursor({
     isMobile,
     hoverDuration,
     parallaxOn,
-    cursorColor,
-    cursorColorOnTarget,
   ]);
 
   useEffect(() => {
@@ -449,28 +417,16 @@ export default function TargetCursor({
   }
 
   return (
-    <div ref={cursorRef} className="target-cursor-wrapper">
-      <div
-        ref={dotRef}
-        className="target-cursor-dot"
-        style={{ backgroundColor: cursorColor }}
-      />
-      <div
-        className="target-cursor-corner corner-tl"
-        style={{ borderColor: cursorColor }}
-      />
-      <div
-        className="target-cursor-corner corner-tr"
-        style={{ borderColor: cursorColor }}
-      />
-      <div
-        className="target-cursor-corner corner-br"
-        style={{ borderColor: cursorColor }}
-      />
-      <div
-        className="target-cursor-corner corner-bl"
-        style={{ borderColor: cursorColor }}
-      />
+    <div
+      ref={cursorRef}
+      className="target-cursor-wrapper"
+      style={{ ["--cursor-color" as string]: cursorColor }}
+    >
+      <div ref={dotRef} className="target-cursor-dot" />
+      <div className="target-cursor-corner corner-tl" />
+      <div className="target-cursor-corner corner-tr" />
+      <div className="target-cursor-corner corner-br" />
+      <div className="target-cursor-corner corner-bl" />
     </div>
   );
 }
