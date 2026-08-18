@@ -125,27 +125,37 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-12 flex flex-wrap gap-6"
+            className="mt-12 flex w-fit max-w-full flex-col gap-6"
           >
+            <div className="flex flex-wrap gap-6">
+              <a
+                href="#projects"
+                className="cyber-clip px-8 md:px-12 py-4 md:py-5 bg-[var(--color-neon-yellow)] text-black font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-white transition-all shadow-[0_0_20px_rgba(252,238,10,0.6)]"
+              >
+                PROJECTS
+              </a>
+              <a
+                href="#contact"
+                className="cyber-clip-reverse px-8 md:px-12 py-4 md:py-5 bg-transparent border-2 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)] font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-[var(--color-neon-cyan)] hover:text-black hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all"
+              >
+                CONTACT
+              </a>
+              <a
+                href="https://docs.google.com/document/d/1oNGmw424dvk0vCn397BmEJdtBgCNMYr2MjYfGfRhaiM/edit?usp=sharing"
+                target="_blank"
+                rel="noreferrer"
+                className="cyber-clip px-8 md:px-12 py-4 md:py-5 bg-[var(--color-neon-pink)] text-white font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,0,60,0.6)]"
+              >
+                RESUME
+              </a>
+            </div>
             <a
-              href="#projects"
-              className="cyber-clip px-8 md:px-12 py-4 md:py-5 bg-[var(--color-neon-yellow)] text-black font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-white transition-all shadow-[0_0_20px_rgba(252,238,10,0.6)]"
-            >
-              PROJECTS
-            </a>
-            <a
-              href="#contact"
-              className="cyber-clip-reverse px-8 md:px-12 py-4 md:py-5 bg-transparent border-2 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)] font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-[var(--color-neon-cyan)] hover:text-black hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all"
-            >
-              CONTACT
-            </a>
-            <a
-              href="https://docs.google.com/document/d/1oNGmw424dvk0vCn397BmEJdtBgCNMYr2MjYfGfRhaiM/edit?usp=sharing"
+              href="https://ez-it-consulting.vercel.app/"
               target="_blank"
               rel="noreferrer"
-              className="cyber-clip px-8 md:px-12 py-4 md:py-5 bg-[var(--color-neon-pink)] text-white font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,0,60,0.6)]"
+              className="cyber-clip-reverse w-full flex items-center justify-center px-8 md:px-12 py-4 md:py-5 bg-transparent border-2 border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)] font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-[var(--color-neon-cyan)] hover:text-black hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all"
             >
-              RESUME
+              My free consulting service
             </a>
           </motion.div>
         </div>
