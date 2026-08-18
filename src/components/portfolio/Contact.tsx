@@ -1,9 +1,13 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./BrandIcons";
 import { Reveal } from "./Reveal";
+
+const FORM_ACTION = "https://formsubmit.co/sk010us@gmail.com";
+const COOLDOWN_MS = 5 * 60 * 1000;
+const STORAGE_KEY = "portfolio-contact-last-submit";
 
 const contacts = [
   {
@@ -36,60 +40,79 @@ const contacts = [
   },
 ];
 
-type Status = "idle" | "sending" | "success" | "error";
+type Status = "idle" | "sending" | "success" | "error" | "cooldown";
+
+function getCooldownRemainingMs(): number {
+  if (typeof window === "undefined") return 0;
+  const last = localStorage.getItem(STORAGE_KEY);
+  if (!last) return 0;
+  const elapsed = Date.now() - Number(last);
+  return Math.max(0, COOLDOWN_MS - elapsed);
+}
+
+function formatCooldown(ms: number): string {
+  const totalSeconds = Math.ceil(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
 
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [cooldownMs, setCooldownMs] = useState(0);
+  const [nextUrl, setNextUrl] = useState("");
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  useEffect(() => {
+    setNextUrl(`${window.location.origin}/?submitted=1#contact`);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("submitted") === "1") {
+      localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      setStatus("success");
+      window.history.replaceState({}, "", `${window.location.pathname}#contact`);
+    }
+
+    setCooldownMs(getCooldownRemainingMs());
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCooldownMs(getCooldownRemainingMs());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const name = String(formData.get("name") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const message = String(formData.get("message") ?? "").trim();
 
+    const remaining = getCooldownRemainingMs();
+    if (remaining > 0) {
+      e.preventDefault();
+      setCooldownMs(remaining);
+      setStatus("cooldown");
+      setErrorMessage("");
+      return;
+    }
+
     if (!name || !email || !message) {
+      e.preventDefault();
       setStatus("error");
       setErrorMessage("All fields are required.");
       return;
     }
 
+    localStorage.setItem(STORAGE_KEY, String(Date.now()));
     setStatus("sending");
     setErrorMessage("");
-
-    try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/sk010us@gmail.com",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            message,
-            _subject: `Portfolio contact from ${name}`,
-            _template: "table",
-            _captcha: "false",
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to send message.");
-      }
-
-      form.reset();
-      setStatus("success");
-    } catch {
-      setStatus("error");
-      setErrorMessage("Transmission failed. Try again or email me directly.");
-    }
   }
+
+  const isSubmitDisabled = status === "sending" || cooldownMs > 0;
 
   return (
     <section
@@ -185,9 +208,25 @@ export function Contact() {
             </div>
 
             <form
+              action={FORM_ACTION}
+              method="POST"
               onSubmit={handleSubmit}
               className="bg-black/90 p-9 md:p-10 flex flex-col gap-7 relative z-10 cyber-clip-reverse h-full"
             >
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_subject" value="Portfolio contact form" />
+              {nextUrl ? (
+                <input type="hidden" name="_next" value={nextUrl} />
+              ) : null}
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden
+              />
+
               <div className="flex flex-col gap-2 relative group">
                 <label
                   htmlFor="name"
@@ -244,6 +283,12 @@ export function Contact() {
                   TRANSMISSION SUCCESSFUL // MESSAGE SENT
                 </p>
               )}
+              {cooldownMs > 0 && (
+                <p className="font-mono text-sm text-[var(--color-neon-yellow)] tracking-widest">
+                  Please wait before submitting again. You can resubmit in{" "}
+                  {formatCooldown(cooldownMs)}.
+                </p>
+              )}
               {status === "error" && (
                 <p className="font-mono text-sm text-[var(--color-neon-pink)] tracking-widest">
                   {errorMessage}
@@ -252,10 +297,14 @@ export function Contact() {
 
               <button
                 type="submit"
-                disabled={status === "sending"}
+                disabled={isSubmitDisabled}
                 className="group w-full cyber-clip bg-[var(--color-neon-cyan)] hover:bg-white text-black font-[family-name:var(--font-display)] font-black text-2xl py-5 flex items-center justify-center gap-3 transition-all duration-300 mt-4 shadow-[0_0_15px_rgba(0,240,255,0.4)] hover:shadow-white disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === "sending" ? "SENDING..." : "EXECUTE"}{" "}
+                {status === "sending"
+                  ? "REDIRECTING TO CAPTCHA..."
+                  : cooldownMs > 0
+                    ? `WAIT ${formatCooldown(cooldownMs)}`
+                    : "EXECUTE"}{" "}
                 <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>

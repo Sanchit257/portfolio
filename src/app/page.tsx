@@ -8,6 +8,7 @@ import { Certifications } from "@/components/portfolio/Certifications";
 import { Activities } from "@/components/portfolio/Activities";
 import { Contact } from "@/components/portfolio/Contact";
 import { StatusBar } from "@/components/portfolio/StatusBar";
+import { Footer } from "@/components/portfolio/Footer";
 import { WavesBackground } from "@/components/portfolio/WavesBackground";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
         <Activities />
         <Contact />
       </main>
+      <Footer />
       <StatusBar />
     </div>
   );
