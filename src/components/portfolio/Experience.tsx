@@ -66,29 +66,29 @@ export function Experience() {
                   </a>
                 </p>
                 <p>
-                  &gt; Diagnose technical problems by gathering information
+                  &gt; Diagnosed technical problems by gathering information
                   about the issue, identifying symptoms, and narrowing down
                   potential causes.
                 </p>
                 <p>
-                  &gt; Troubleshoot hardware, operating system, software, and
+                  &gt; Troubleshot hardware, operating system, software, and
                   connectivity problems using a structured, step-by-step
                   approach.
                 </p>
                 <p>
-                  &gt; Review wireless network configurations for common
+                  &gt; Reviewed wireless network configurations for common
                   security weaknesses.
                 </p>
                 <p>
-                  &gt; Review systems for outdated operating systems,
+                  &gt; Reviewed systems for outdated operating systems,
                   applications, and network-device firmware.
                 </p>
                 <p>
-                  &gt; Configure stronger Wi-Fi passwords and secure
+                  &gt; Configured stronger Wi-Fi passwords and secure
                   administrative credentials.
                 </p>
                 <p>
-                  &gt; Recommend practical improvements such as stronger
+                  &gt; Recommended practical improvements such as stronger
                   authentication, firmware updates, network segmentation, and
                   disabling unnecessary services when appropriate.
                 </p>
