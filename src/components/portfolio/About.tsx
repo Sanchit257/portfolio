@@ -13,8 +13,7 @@ import { TelemetryFeed } from "./Hero";
 import { GithubIcon, LinkedinIcon } from "./BrandIcons";
 import { Reveal } from "./Reveal";
 
-const RESUME_URL =
-  "https://docs.google.com/document/d/1oNGmw424dvk0vCn397BmEJdtBgCNMYr2MjYfGfRhaiM/edit?usp=sharing";
+const RESUME_URL = "/Sanchit_Kaushik_Resume.pdf";
 
 export function About() {
   return (

@@ -141,7 +141,7 @@ export function Hero() {
                 CONTACT
               </a>
               <a
-                href="https://docs.google.com/document/d/1oNGmw424dvk0vCn397BmEJdtBgCNMYr2MjYfGfRhaiM/edit?usp=sharing"
+                href="/Sanchit_Kaushik_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="cyber-clip px-8 md:px-12 py-4 md:py-5 bg-[var(--color-neon-pink)] text-white font-[family-name:var(--font-display)] font-black text-base md:text-xl tracking-widest uppercase hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,0,60,0.6)]"
