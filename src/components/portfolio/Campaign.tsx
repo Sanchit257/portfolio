@@ -5,7 +5,7 @@ export function Campaign() {
   return (
     <section id="experience" className="section section-campaign">
       <div className="wrap">
-        <SectionHead num="03" code="CAMPAIGN" plain="Experience" />
+        <SectionHead num="02" code="CAMPAIGN" plain="Experience" />
 
         <ol className="acts">
           {CAMPAIGN.map((act, n) => (

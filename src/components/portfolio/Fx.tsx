@@ -75,7 +75,8 @@ export function Fx() {
       last = { x, y };
       bloom += (Math.min(speed * 0.55, 22) - bloom) * 0.16;
       kick *= 0.82;
-      node.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      // The `translate` property, because `rotate` would swing a `transform` position around the page.
+      node.style.translate = `${x}px ${y}px`;
       node.style.setProperty("--gap", `${(bloom + kick).toFixed(1)}px`);
       raf = requestAnimationFrame(frame);
     };

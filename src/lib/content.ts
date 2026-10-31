@@ -8,11 +8,11 @@ export const ROLE_LINE =
 
 export const SECTIONS = [
   { id: "hero", code: "MAIN MENU", plain: "Top", intel: "Return to the main menu." },
-  { id: "about", code: "DOSSIER", plain: "About", intel: "Personnel file. Background and education." },
-  { id: "skills", code: "LOADOUT", plain: "Skills", intel: "Equipped languages, tools and tradecraft." },
+  { id: "about", code: "AGENT FILES", plain: "About", intel: "Personnel file. Background and education." },
   { id: "experience", code: "CAMPAIGN", plain: "Experience", intel: "Field deployments and objectives completed." },
   { id: "projects", code: "MISSIONS", plain: "Projects", intel: "The home lab, mapped out site by site." },
   { id: "certifications", code: "COMMENDATIONS", plain: "Certifications", intel: "Earned and in-progress credentials." },
+  { id: "skills", code: "LOADOUT", plain: "Skills", intel: "Equipped languages, tools and tradecraft." },
   { id: "activities", code: "SIDE OPS", plain: "Activities", intel: "Off-duty organizing and teaching." },
   { id: "contact", code: "COMMS", plain: "Contact", intel: "Open a secure channel." },
 ] as const;

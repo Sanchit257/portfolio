@@ -83,7 +83,7 @@ export function Loadout() {
     <section id="skills" className="section section-loadout">
       <div className="bg-word" aria-hidden>ARSENAL</div>
       <div className="wrap">
-        <SectionHead num="02" code="LOADOUT" plain="Skills" align="right" />
+        <SectionHead num="05" code="LOADOUT" plain="Skills" align="right" />
 
         <div className="slots" role="tablist" aria-label="Skill categories" onKeyDown={onKeyDown} data-fx>
           {LOADOUT.map((slot, i) => (

@@ -7,7 +7,7 @@ export function Commendations() {
   return (
     <section id="certifications" className="section section-medals">
       <div className="wrap">
-        <SectionHead num="05" code="COMMENDATIONS" plain="Certifications" />
+        <SectionHead num="04" code="COMMENDATIONS" plain="Certifications" />
 
         <div className="medals">
           {CERTS.map((cert) => (

@@ -22,10 +22,10 @@ export default function Home() {
       <Rail>
         <Hero />
         <Dossier />
-        <Loadout />
         <Campaign />
         <Missions />
         <Commendations />
+        <Loadout />
         <SideOps />
         <Comms />
         <div className="panel-end">

@@ -17,7 +17,7 @@ export function Missions() {
   return (
     <section id="projects" className="section section-missions">
       <div className="wrap wrap-wide">
-        <SectionHead num="04" code="MISSIONS" plain="Projects" align="right" />
+        <SectionHead num="03" code="MISSIONS" plain="Projects" align="right" />
 
         <div className="ops">
           <div className="map" data-fx>

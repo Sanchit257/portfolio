@@ -25,7 +25,7 @@ export function Dossier() {
   return (
     <section id="about" className="section section-dossier">
       <div className="wrap">
-        <SectionHead num="01" code="DOSSIER" plain="About me" />
+        <SectionHead num="01" code="AGENT FILES" plain="About me" />
 
         <div className="folder" data-fx>
           <p className="folder-tab">Personnel file / S. Kaushik</p>
