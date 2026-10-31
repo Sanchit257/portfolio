@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, type KeyboardEvent } from "react";
-import { LOADOUT, MISSIONS, type LoadoutItem } from "@/lib/content";
+import { HOME_LAB, LOADOUT, type LoadoutItem } from "@/lib/content";
 import { playSfx } from "@/lib/sfx";
 import { SectionHead } from "./SectionHead";
-
-const missionTitle = (id: string) => MISSIONS.find((m) => m.id === id)?.op;
 
 function Blueprint({ slot }: { slot: string }) {
   return (
@@ -44,10 +42,9 @@ function Blueprint({ slot }: { slot: string }) {
 }
 
 function Attachment({ item, n, side }: { item: LoadoutItem; n: number; side: "l" | "r" }) {
-  const op = item.mission ? missionTitle(item.mission) : undefined;
   const style = { "--i": n } as React.CSSProperties;
 
-  if (!op) {
+  if (!item.lab) {
     return (
       <li className="att" data-side={side} style={style}>
         <span className="att-name">{item.name}</span>
@@ -56,14 +53,9 @@ function Attachment({ item, n, side }: { item: LoadoutItem; n: number; side: "l"
   }
   return (
     <li className="att att-linked" data-side={side} style={style}>
-      <a
-        href="#projects"
-        onClick={() =>
-          window.dispatchEvent(new CustomEvent("mission:select", { detail: item.mission }))
-        }
-      >
+      <a href="#projects">
         <span className="att-name">{item.name}</span>
-        <small>Field-tested: {op}</small>
+        <small>Field-tested: {HOME_LAB.title}</small>
       </a>
     </li>
   );

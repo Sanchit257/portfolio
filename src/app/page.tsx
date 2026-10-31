@@ -11,6 +11,7 @@ import { SideOps } from "@/components/portfolio/SideOps";
 import { Comms } from "@/components/portfolio/Comms";
 import { Scoreboard } from "@/components/portfolio/Scoreboard";
 import { Footer } from "@/components/portfolio/Footer";
+import { Rail } from "@/components/portfolio/Rail";
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
       <ColdOpen />
       <Fx />
       <Hud />
-      <main className="relative">
+      <Rail>
         <Hero />
         <Dossier />
         <Loadout />
@@ -27,9 +28,11 @@ export default function Home() {
         <Commendations />
         <SideOps />
         <Comms />
-        <Scoreboard />
-      </main>
-      <Footer />
+        <div className="panel-end">
+          <Scoreboard />
+          <Footer />
+        </div>
+      </Rail>
     </>
   );
 }

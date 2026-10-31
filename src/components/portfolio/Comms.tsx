@@ -13,7 +13,7 @@ const BARS = 44;
 
 const channels = [
   { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
-  { icon: LinkedinIcon, label: "LinkedIn", value: "sanchitka", href: LINKEDIN_URL },
+  { icon: LinkedinIcon, label: "LinkedIn", value: "sanc-k", href: LINKEDIN_URL },
   { icon: GithubIcon, label: "GitHub", value: "Sanchit257", href: GITHUB_URL },
   { icon: MapPin, label: "Location", value: "Cypress, CA, United States of America", href: undefined },
 ];

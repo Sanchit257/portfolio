@@ -1,15 +1,15 @@
 import { CONSULTING_URL, RESUME_URL, ROLE_LINE, SECTIONS } from "@/lib/content";
-import { Embers } from "./Embers";
 import { MenuList } from "./MenuList";
 import { OperatorCard } from "./OperatorCard";
 
 export function Hero() {
   return (
     <section id="hero" className="hero">
-      <div className="hero-topo" aria-hidden />
-      <div className="hero-smoke" aria-hidden />
+      <div className="hero-bg" aria-hidden>
+        <div className="hero-topo" />
+        <div className="hero-smoke" />
+      </div>
       <OperatorCard />
-      <Embers />
 
       <div className="hero-content">
         <p className="hero-eyebrow hero-a" style={{ "--i": 0 } as React.CSSProperties}>
@@ -38,6 +38,9 @@ export function Hero() {
           <a href={CONSULTING_URL} target="_blank" rel="noreferrer" className="btn-ghost">
             My free consulting service
           </a>
+          <p className="hero-cue">
+            Scroll or swipe <span aria-hidden>▸▸▸</span>
+          </p>
         </div>
       </div>
 

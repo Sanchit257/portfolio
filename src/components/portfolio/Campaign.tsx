@@ -17,6 +17,7 @@ export function Campaign() {
                 <div className="act-head">
                   <div>
                     <h3>{act.title}</h3>
+                    <p className="act-org">{act.org}</p>
                     <p className="act-place">{act.place}</p>
                   </div>
                   <div className="act-status">

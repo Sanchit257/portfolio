@@ -2,7 +2,7 @@ export const RESUME_URL = "/Sanchit_Kaushik_Resume.pdf";
 export const CONSULTING_URL = "https://ez-it-consulting.vercel.app/";
 export const EMAIL = "sk010us@gmail.com";
 export const GITHUB_URL = "https://github.com/Sanchit257";
-export const LINKEDIN_URL = "https://www.linkedin.com/in/sanchitka";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/sanc-k";
 export const ROLE_LINE =
   "IT Specialist & Consultant | Software Developer | Cybersecurity Enthusiast";
 
@@ -11,7 +11,7 @@ export const SECTIONS = [
   { id: "about", code: "DOSSIER", plain: "About", intel: "Personnel file. Background and education." },
   { id: "skills", code: "LOADOUT", plain: "Skills", intel: "Equipped languages, tools and tradecraft." },
   { id: "experience", code: "CAMPAIGN", plain: "Experience", intel: "Field deployments and objectives completed." },
-  { id: "projects", code: "MISSIONS", plain: "Projects", intel: "Select an operation from the tactical map." },
+  { id: "projects", code: "MISSIONS", plain: "Projects", intel: "The home lab, mapped out site by site." },
   { id: "certifications", code: "COMMENDATIONS", plain: "Certifications", intel: "Earned and in-progress credentials." },
   { id: "activities", code: "SIDE OPS", plain: "Activities", intel: "Off-duty organizing and teaching." },
   { id: "contact", code: "COMMS", plain: "Contact", intel: "Open a secure channel." },
@@ -28,96 +28,46 @@ export const RANKS = [
   "COMMANDER",
 ];
 
-/** Every entry is taken from a real bullet in Experience or Projects. */
-export const KILLFEED = [
-  "Account lockouts",
-  "GPO / RDP access issues",
-  "Suspicious logins",
-  "Outdated firmware",
-  "Weak Wi-Fi passwords",
-  "Manual ADUC workflows",
-  "Student advising pain points",
-  "Server downtime",
-];
-
-export type Mission = {
-  id: string;
-  op: string;
-  title: string;
-  tech: string;
-  date: string;
-  desc: string[];
-  githubUrl?: string;
-  /** Pin position on the tactical map, in percent. */
-  x: number;
-  y: number;
+/** Bullets match the resume. `x` and `y` place each pin on the tactical map, in percent. */
+export const HOME_LAB = {
+  title: "Home Lab",
+  tech: "n8n, ML, SCADA, Docker, Entra ID, Azure, Splunk, Linux, Burp",
+  date: "Aug. 2026 – Current",
+  sites: [
+    {
+      id: "pentest",
+      label: "Pentest range",
+      text: "Performed pentesting (recon and web-app/remote exploitation) & threat detection with 4 VMs",
+      x: 22,
+      y: 30,
+    },
+    {
+      id: "scada",
+      label: "SCADA",
+      text: "Simulated SCADA monitoring system using Python & Dockerized n8n that processed 120,000+ telemetry logs",
+      x: 66,
+      y: 22,
+    },
+    {
+      id: "entra",
+      label: "Entra ID",
+      text: "Simulated Entra ID by automating account creation via PowerShell scripting & resolving help desk tickets",
+      x: 52,
+      y: 62,
+    },
+    {
+      id: "minecraft",
+      label: "Minecraft",
+      text: "Hosting a configured Minecraft server using Ubuntu Linux with support for up to 5 players",
+      x: 16,
+      y: 76,
+    },
+  ],
 };
 
-export const MISSIONS: Mission[] = [
-  {
-    id: "ad",
-    op: "IRON DOMAIN",
-    title: "Enterprise Active Directory Lab",
-    tech: "Active Directory, Microsoft Azure",
-    date: "August 2026",
-    desc: [
-      "Automated Active Directory user and group provisioning with PowerShell, replacing manual ADUC workflows with repeatable, scalable account-management scripts.",
-      "Troubleshot account lockouts and GPO/RDP access issues by analyzing Active Directory logs, PowerShell/CMD diagnostics, and configuration settings to identify and resolve root causes.",
-      "Configured and enforced Group Policy controls for password policies and endpoint restrictions across domain-joined clients, while deploying and troubleshooting the environment on Microsoft Azure infrastructure.",
-    ],
-    githubUrl: "https://github.com/Sanchit257/AD-lab",
-    x: 74,
-    y: 24,
-  },
-  {
-    id: "ceo",
-    op: "GOLDEN PARACHUTE",
-    title: "CEO Account Takeover",
-    tech: "Wazuh GitHub",
-    date: "July 2026",
-    desc: [
-      "Triaged and investigated simulated CEO account-takeover activity in Wazuh, analyzing authentication, account, file, and process events to distinguish relevant security activity from routine alerts.",
-      "Developed and validated custom Wazuh detection rules for suspicious logins, administrator creation, sensitive file access, downloads, and process execution, troubleshooting detection and telemetry issues through repeatable attack simulations.",
-      "Correlated endpoint events into an incident timeline using Python and FastAPI, enabling systematic investigation from initial authentication activity through post-compromise actions and supporting evidence-based incident reporting.",
-    ],
-    githubUrl: "https://github.com/Sanchit257/account-takeover-of-ceo",
-    x: 50,
-    y: 62,
-  },
-  {
-    id: "range",
-    op: "RED RANGE",
-    title: "Virtualized Pentesting and Threat Detection",
-    tech: "Splunk, Burp, nmap",
-    date: "July 2026",
-    desc: [
-      "Built and operated an isolated 4-VM cyber range to simulate realistic attacker and defender workflows across segmented virtualized infrastructure.",
-      "Conducted reconnaissance and simulated web/remote exploitation against vulnerable systems, tracing attack activity across the environment to evaluate detection and response capabilities.",
-      "Investigated attack telemetry using Suricata IDS and Splunk, correlating alerts into an incident timeline, documenting IOCs, identifying root causes, and developing remediation recommendations.",
-    ],
-    githubUrl: "https://github.com/Sanchit257/cyber_range",
-    x: 28,
-    y: 34,
-  },
-  {
-    id: "minecraft",
-    op: "OVERWORLD",
-    title: "Self-Hosted Minecraft Server",
-    tech: "Linux, Cable Management, Troubleshooting",
-    date: "June 2026",
-    desc: [
-      "Engineered & Deployed Dedicated Linux Infrastructure: Hosted a dedicated Minecraft server environment on Ubuntu Linux using Crafty Controller, managing system background services (systemctl), background process isolation, and resource allocation.",
-      "Configured Zero-Trust Network Tunneling: Implemented secure WAN connectivity and automated port forwarding via Playit.gg, enabling low-latency remote user access without exposing local network infrastructure to direct public inbound routes.",
-      "Automated System Resiliency & Power Management: Authored system-level service configurations and power policy overrides to guarantee high availability, enabling automated boot-time initialization, auto-recovery upon host restarts, and continuous 24/7 server uptime.",
-    ],
-    x: 16,
-    y: 76,
-  },
-];
+export type LoadoutItem = { name: string; lab?: boolean };
 
-export type LoadoutItem = { name: string; mission?: string };
-
-/** `mission` links a skill to the project whose write-up names it. */
+/** `lab` links a skill to the home lab, whose resume entry names it. */
 export const LOADOUT: {
   id: string;
   slot: string;
@@ -130,13 +80,13 @@ export const LOADOUT: {
     title: "Cyber",
     items: [
       { name: "Networking Fundamentals" },
-      { name: "Nmap", mission: "range" },
+      { name: "Nmap" },
       { name: "Wireshark" },
       { name: "Tcpdump" },
-      { name: "Cable Management", mission: "minecraft" },
-      { name: "Troubleshooting", mission: "minecraft" },
-      { name: "Virtualization", mission: "range" },
-      { name: "Documentation", mission: "range" },
+      { name: "Cable Management" },
+      { name: "Troubleshooting" },
+      { name: "Virtualization" },
+      { name: "Documentation" },
       { name: "Network Traffic Analysis" },
     ],
   },
@@ -145,7 +95,7 @@ export const LOADOUT: {
     slot: "SECONDARY",
     title: "Programming Languages",
     items: [
-      { name: "Python", mission: "ceo" },
+      { name: "Python", lab: true },
       { name: "JavaScript" },
       { name: "C/C++" },
       { name: "HTML5" },
@@ -162,12 +112,12 @@ export const LOADOUT: {
     items: [
       { name: "GitHub/Git" },
       { name: "AWS" },
-      { name: "Docker" },
-      { name: "Linux", mission: "minecraft" },
-      { name: "Splunk", mission: "range" },
-      { name: "Burp Suite", mission: "range" },
-      { name: "Active Directory", mission: "ad" },
-      { name: "MS Azure", mission: "ad" },
+      { name: "Docker", lab: true },
+      { name: "Linux", lab: true },
+      { name: "Splunk", lab: true },
+      { name: "Burp Suite", lab: true },
+      { name: "Active Directory" },
+      { name: "MS Azure", lab: true },
       { name: "MS & Google Suite" },
     ],
   },
@@ -175,35 +125,74 @@ export const LOADOUT: {
 
 export const CAMPAIGN = [
   {
-    title: "IT Consultant @ EZ IT Consulting",
+    title: "IT Automation Intern",
+    org: "Irvine Ranch Water District",
+    place: "Irvine, CA",
+    period: "Oct. 2026 – Present",
+    active: true,
+    link: undefined,
+    objectives: [
+      "Built event-driven industrial monitoring setups & SCADA tools using Python, MQTT, & Dockerized n8n",
+      "Cut down manual support by engineering RAG pipelines on help desk tickets with the use of automation scripts",
+      "Administered Azure cloud environments & server patch management while auditing security logs with Splunk",
+    ],
+    tags: ["SCADA", "n8n", "Azure", "Splunk"],
+  },
+  {
+    title: "Information Technology Intern",
+    org: "Blackmore Partners",
+    place: "Remote",
+    period: "Aug. 2026 – Present",
+    active: true,
+    link: undefined,
+    objectives: [
+      "Re-engaged 4,000+ executive contacts by managing automated outreach workflows to improve engagement",
+      "Enabled self-service support for 100+ employees/partners by building a RAG pipeline based on corporate CRM",
+      "Restored email functionality & unblocked accounts for affected users by resolving high-severity MS 365 alerts",
+    ],
+    tags: ["Automation", "RAG", "CRM", "MS 365"],
+  },
+  {
+    title: "IT and Cybersecurity Consultant",
+    org: "EZ IT Consulting",
     place: "Cypress, CA",
-    period: "August 2026 - Current",
+    period: "July 2026 – Present",
     active: true,
     link: { href: CONSULTING_URL, label: "Free IT consulting service — ez-it-consulting.vercel.app" },
     objectives: [
-      "Diagnosed technical problems by gathering information about the issue, identifying symptoms, and narrowing down potential causes.",
-      "Troubleshot hardware, operating system, software, and connectivity problems using a structured, step-by-step approach.",
-      "Reviewed wireless network configurations for common security weaknesses.",
-      "Reviewed systems for outdated operating systems, applications, and network-device firmware.",
-      "Configured stronger Wi-Fi passwords and secure administrative credentials.",
-      "Recommended practical improvements such as stronger authentication, firmware updates, network segmentation, and disabling unnecessary services when appropriate.",
+      "Resolved technical issues for 10+ clients by gathering information and narrowing down root causes",
+      "Upgraded client security by auditing for outdated OS versions & reconfiguring admin Wi-Fi credentials",
+      "Helped set up & move around desks, home office equipment, PCs, monitors, & printers for clients",
     ],
-    tags: ["IT Support", "Networking", "Security"],
+    tags: ["IT Support", "Security"],
   },
   {
-    title: "AWS x DxHub Summer Camp",
-    place: "California PolyTechnic University, San Luis Obispo",
-    period: "June 2026 - July 2026",
+    title: "Application Security Engineer",
+    org: "Association for Computing Machinery",
+    place: "Long Beach, CA",
+    period: "Sept. 2025 – Present",
+    active: true,
+    link: undefined,
+    objectives: [
+      "Built prod-ready web apps & ran security audits using automated static analysis & dependency scanning",
+      "Probed APIs and endpoints via OWASP ZAP and Burp Suite to uncover injection flaws & insecure file uploads",
+      "Secured container infra with Docker Scout while drafting code patches for OWASP Top 10 vulnerabilities",
+    ],
+    tags: ["OWASP ZAP", "Burp Suite", "Docker Scout"],
+  },
+  {
+    title: "Full Stack Developer",
+    org: "AWS x DxHUB",
+    place: "San Luis Obispo, CA",
+    period: "June 2026 – July 2026",
     active: false,
     link: undefined,
     objectives: [
-      "Led stakeholder discovery calls with the Dean of CSU Bakersfield to identify student advising pain points and translate them into technical project requirements",
-      "Developed a 100% scalable full-stack web application on AWS that dynamically generates block schedules and prerequisite maps for incoming students",
-      "Built a RAG pipeline for CSUB faculty enabling personalized, AI-driven course guidance for over 1,000 incoming freshmen each year",
-      "Collaborated cross-functionally with university leadership, faculty, and engineers to deliver a production-ready solution within a compressed timeline",
-      "Gained hands-on experience with AWS cloud infrastructure, full-stack development, and AI-driven application design in a real-world client engagement",
+      "Aligned solutions with stakeholder needs on discovery calls with the CSUB Dean to surface advising pain points",
+      "Improved advising for 25+ faculty members by architecting an AWS web app that generates schedules and plans",
+      "Built a RAG pipeline with AI-driven guidance to help faculty advise courses for 1000+ freshmen every year",
     ],
-    tags: ["AWS", "Full-Stack Web Dev", "AI-Engineering"],
+    tags: ["AWS", "RAG", "Full Stack"],
   },
 ];
 
@@ -245,7 +234,7 @@ export const SIDE_OPS = [
 
 /** The end-of-match scoreboard. Counted from the data above, never invented. */
 export const SCOREBOARD = [
-  { label: "Missions run", value: String(MISSIONS.length) },
+  { label: "Lab sites", value: String(HOME_LAB.sites.length) },
   { label: "Deployments", value: String(CAMPAIGN.length) },
   { label: "Certs earned", value: String(CERTS.filter((c) => c.earned).length) },
   { label: "Certs in progress", value: String(CERTS.filter((c) => !c.earned).length) },

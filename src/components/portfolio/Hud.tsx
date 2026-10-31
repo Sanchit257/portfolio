@@ -7,8 +7,8 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { KILLFEED, RANKS, RESUME_URL, SECTIONS } from "@/lib/content";
+import { AnimatePresence, motion } from "motion/react";
+import { RANKS, RESUME_URL, SECTIONS } from "@/lib/content";
 import { playSfx, sfxEnabled, subscribeSfx, toggleSfx } from "@/lib/sfx";
 
 const PX_PER_DEG = 5;
@@ -20,59 +20,6 @@ const TICKS = Array.from({ length: 81 }, (_, i) => i * 5 - 20);
 function isTyping(target: EventTarget | null) {
   const el = target as HTMLElement | null;
   return Boolean(el?.closest?.("input, textarea, select"));
-}
-
-function Crosshair({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 16 16" className={className} aria-hidden>
-      <circle cx="8" cy="8" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M8 0v5M8 11v5M0 8h5M11 8h5" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
-function Killfeed({ live }: { live: boolean }) {
-  const reduced = useReducedMotion();
-  const [feed, setFeed] = useState<{ id: number; text: string }[]>([]);
-
-  useEffect(() => {
-    if (!live || reduced) return;
-    let id = 0;
-    const push = () => {
-      if (document.hidden) return;
-      setFeed((prev) =>
-        [...prev, { id: id, text: KILLFEED[id % KILLFEED.length] }].slice(-3),
-      );
-      id += 1;
-    };
-    const first = window.setTimeout(push, 800);
-    const timer = window.setInterval(push, 5200);
-    return () => {
-      window.clearTimeout(first);
-      window.clearInterval(timer);
-    };
-  }, [live, reduced]);
-
-  return (
-    <div className="killfeed" aria-hidden>
-      <AnimatePresence initial={false}>
-        {feed.map((entry) => (
-          <motion.p
-            key={entry.id}
-            layout
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
-          >
-            <span className="kf-self">SK</span>
-            <Crosshair className="kf-icon" />
-            <span>{entry.text}</span>
-          </motion.p>
-        ))}
-      </AnimatePresence>
-    </div>
-  );
 }
 
 export function Hud() {
@@ -94,27 +41,28 @@ export function Hud() {
   // One rAF-throttled scroll pass drives the compass, radar, ammo and XP bar.
   useEffect(() => {
     const root = document.documentElement;
+    const rail = document.getElementById("rail");
     const els = SECTIONS.map((s) => document.getElementById(s.id));
     let queued = false;
     let current = -1;
 
     const update = () => {
       queued = false;
-      const probe = window.innerHeight * 0.4;
+      const probe = window.innerWidth * 0.4;
       let idx = 0;
       let frac = 0;
       els.forEach((el, i) => {
         if (!el) return;
         const rect = el.getBoundingClientRect();
-        if (rect.top <= probe) {
+        if (rect.left <= probe) {
           idx = i;
-          frac = Math.min(1, (probe - rect.top) / Math.max(rect.height, 1));
+          frac = Math.min(1, (probe - rect.left) / Math.max(rect.width, 1));
         }
       });
 
       const deg = DEG_PER_SECTION * (idx + frac);
-      const max = root.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      const max = rail ? rail.scrollWidth - rail.clientWidth : 0;
+      const progress = rail && max > 0 ? Math.min(1, rail.scrollLeft / max) : 0;
       const rounds = Math.round(MAG_SIZE * (1 - progress));
 
       if (strip.current) {
@@ -152,10 +100,10 @@ export function Hud() {
       requestAnimationFrame(update);
     };
     update();
-    window.addEventListener("scroll", request, { passive: true });
+    rail?.addEventListener("scroll", request, { passive: true });
     window.addEventListener("resize", request);
     return () => {
-      window.removeEventListener("scroll", request);
+      rail?.removeEventListener("scroll", request);
       window.removeEventListener("resize", request);
     };
   }, []);
@@ -180,7 +128,7 @@ export function Hud() {
       () => document.documentElement.classList.remove("reloading"),
       700,
     );
-    window.scrollTo({ top: 0 });
+    window.dispatchEvent(new CustomEvent("rail:go", { detail: 0 }));
   }, []);
 
   useEffect(() => {
@@ -260,10 +208,6 @@ export function Hud() {
           <kbd>ESC</kbd> Menu
         </button>
       </header>
-
-      <div className="killfeed-slot">
-        <Killfeed live={pastHero} />
-      </div>
 
       <div className="radar" aria-hidden>
         <svg viewBox="0 0 120 120">

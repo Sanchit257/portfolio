@@ -67,7 +67,6 @@ export function Dossier() {
                 <Field label="Location">Cypress, CA, United States of America</Field>
                 <Field label="Education">BS Computer Science, CSULB</Field>
                 <Field label="Record">GPA: 3.5 | Since 2024</Field>
-                <Field label="Shell">ZSH // BASH</Field>
               </dl>
 
               <h3 className="file-h">Summary of service</h3>

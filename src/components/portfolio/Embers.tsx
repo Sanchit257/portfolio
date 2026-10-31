@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 type Ember = { x: number; y: number; vx: number; vy: number; r: number; life: number; max: number };
 
-/** Sparks rising off the hero. Stops whenever the hero is off screen. */
+/** Sparks rising over every page. requestAnimationFrame pauses it in hidden tabs. */
 export function Embers() {
   const canvas = useRef<HTMLCanvasElement>(null);
 
@@ -40,7 +40,6 @@ export function Embers() {
     const embers = Array.from({ length: width < 700 ? 22 : 54 }, () => make(true));
 
     let raf = 0;
-    let running = false;
     let t = 0;
     const frame = () => {
       t += 0.02;
@@ -63,19 +62,9 @@ export function Embers() {
       raf = requestAnimationFrame(frame);
     };
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !running) {
-        running = true;
-        raf = requestAnimationFrame(frame);
-      } else if (!entry.isIntersecting && running) {
-        running = false;
-        cancelAnimationFrame(raf);
-      }
-    });
-    observer.observe(el);
+    raf = requestAnimationFrame(frame);
     window.addEventListener("resize", resize);
     return () => {
-      observer.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
     };

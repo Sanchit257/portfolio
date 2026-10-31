@@ -1,41 +1,18 @@
 "use client";
 
-import { useEffect, useState, type KeyboardEvent } from "react";
-import { MISSIONS } from "@/lib/content";
+import { useState } from "react";
+import { GITHUB_URL, HOME_LAB } from "@/lib/content";
 import { playSfx } from "@/lib/sfx";
 import { GithubIcon } from "./BrandIcons";
 import { SectionHead } from "./SectionHead";
 
-const ROUTE = MISSIONS.slice()
+const ROUTE = HOME_LAB.sites.slice()
   .reverse()
-  .map((m, i) => `${i === 0 ? "M" : "L"}${m.x} ${m.y}`)
+  .map((site, i) => `${i === 0 ? "M" : "L"}${site.x} ${site.y}`)
   .join(" ");
 
 export function Missions() {
-  const [selected, setSelected] = useState(MISSIONS[0].id);
-
-  const select = (id: string) => {
-    setSelected(id);
-    playSfx("select");
-  };
-
-  // The loadout's "Field-tested" links jump here and pick their mission.
-  useEffect(() => {
-    const onSelect = (e: Event) => setSelected((e as CustomEvent<string>).detail);
-    window.addEventListener("mission:select", onSelect);
-    return () => window.removeEventListener("mission:select", onSelect);
-  }, []);
-
-  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const forward = e.key === "ArrowRight" || e.key === "ArrowDown";
-    const back = e.key === "ArrowLeft" || e.key === "ArrowUp";
-    if (!forward && !back) return;
-    e.preventDefault();
-    const at = MISSIONS.findIndex((m) => m.id === selected);
-    const next = MISSIONS[(at + (forward ? 1 : -1) + MISSIONS.length) % MISSIONS.length].id;
-    select(next);
-    e.currentTarget.querySelector<HTMLElement>(`#pin-${next}`)?.focus();
-  };
+  const [selected, setSelected] = useState(HOME_LAB.sites[0].id);
 
   return (
     <section id="projects" className="section section-missions">
@@ -50,20 +27,19 @@ export function Missions() {
               <path d={ROUTE} pathLength={1} />
             </svg>
             <div className="map-scan" aria-hidden />
-            <div className="map-pins" role="tablist" aria-label="Projects" aria-orientation="vertical" onKeyDown={onKeyDown}>
-              {MISSIONS.map((mission, i) => (
+            <div className="map-pins">
+              {HOME_LAB.sites.map((site, i) => (
                 <button
-                  key={mission.id}
-                  id={`pin-${mission.id}`}
+                  key={site.id}
                   type="button"
-                  role="tab"
-                  aria-selected={selected === mission.id}
-                  aria-controls={`brief-${mission.id}`}
-                  aria-label={`Operation ${mission.op}: ${mission.title}`}
-                  tabIndex={selected === mission.id ? 0 : -1}
+                  aria-pressed={selected === site.id}
+                  aria-label={`Highlight ${site.label}`}
                   className="pin"
-                  style={{ "--x": `${mission.x}%`, "--y": `${mission.y}%`, "--i": i } as React.CSSProperties}
-                  onClick={() => select(mission.id)}
+                  style={{ "--x": `${site.x}%`, "--y": `${site.y}%`, "--i": i } as React.CSSProperties}
+                  onClick={() => {
+                    setSelected(site.id);
+                    playSfx("select");
+                  }}
                 >
                   <span className="pin-mark" aria-hidden>
                     <i />
@@ -72,56 +48,48 @@ export function Missions() {
                     <i />
                   </span>
                   <span className="pin-label">
-                    <b>{`OP ${String(i + 1).padStart(2, "0")}`}</b>
-                    {mission.op}
+                    <b>{`SITE ${String(i + 1).padStart(2, "0")}`}</b>
+                    {site.label}
                   </span>
                 </button>
               ))}
             </div>
-            <p className="map-note" aria-hidden>Select an operation</p>
+            <p className="map-note" aria-hidden>Select a site</p>
           </div>
 
-          <div className="briefs">
-            {MISSIONS.map((mission) => (
-              <article
-                key={mission.id}
-                id={`brief-${mission.id}`}
-                role="tabpanel"
-                aria-labelledby={`pin-${mission.id}`}
-                hidden={selected !== mission.id}
-                className="brief"
-              >
-                <p className="brief-op">Operation {mission.op}</p>
-                <h3>{mission.title}</h3>
-                <dl className="brief-meta">
-                  <div>
-                    <dt>Date</dt>
-                    <dd>{mission.date}</dd>
-                  </div>
-                  <div>
-                    <dt>Assets</dt>
-                    <dd>{mission.tech}</dd>
-                  </div>
-                  <div>
-                    <dt>Status</dt>
-                    <dd className="is-green">Operational</dd>
-                  </div>
-                </dl>
-                <ol className="brief-steps">
-                  {mission.desc.map((line, i) => (
-                    <li key={line.slice(0, 32)} style={{ "--i": i } as React.CSSProperties}>
-                      {line}
-                    </li>
-                  ))}
-                </ol>
-                {mission.githubUrl && (
-                  <a href={mission.githubUrl} target="_blank" rel="noreferrer" className="btn-tracer brief-link">
-                    <GithubIcon /> Access data
-                  </a>
-                )}
-              </article>
-            ))}
-          </div>
+          <article className="brief">
+            <p className="brief-op">Active operation</p>
+            <h3>{HOME_LAB.title}</h3>
+            <dl className="brief-meta">
+              <div>
+                <dt>Date</dt>
+                <dd>{HOME_LAB.date}</dd>
+              </div>
+              <div>
+                <dt>Assets</dt>
+                <dd>{HOME_LAB.tech}</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd className="is-green">Operational</dd>
+              </div>
+            </dl>
+            <ol className="brief-steps">
+              {HOME_LAB.sites.map((site, i) => (
+                <li
+                  key={site.id}
+                  data-on={selected === site.id}
+                  style={{ "--i": i } as React.CSSProperties}
+                  onMouseEnter={() => setSelected(site.id)}
+                >
+                  {site.text}
+                </li>
+              ))}
+            </ol>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="btn-tracer brief-link">
+              <GithubIcon /> Access data
+            </a>
+          </article>
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import {
   Share_Tech_Mono,
   Special_Elite,
 } from "next/font/google";
+import { Embers } from "@/components/portfolio/Embers";
 import "./globals.css";
 
 const display = Big_Shoulders_Stencil({
@@ -50,12 +51,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${display.variable} ${body.variable} ${mono.variable} ${typewriter.variable} h-full scroll-smooth antialiased`}
+      className={`${display.variable} ${body.variable} ${mono.variable} ${typewriter.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <Embers />
+        {children}
+      </body>
     </html>
   );
 }
