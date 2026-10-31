@@ -1,24 +1,34 @@
-import type { Metadata } from "next";
-import { JetBrains_Mono, Manrope, Space_Grotesk } from "next/font/google";
-import { TargetCursorProvider } from "@/components/portfolio/TargetCursorProvider";
+import type { Metadata, Viewport } from "next";
+import {
+  Barlow_Semi_Condensed,
+  Big_Shoulders_Stencil,
+  Share_Tech_Mono,
+  Special_Elite,
+} from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const display = Big_Shoulders_Stencil({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["600", "800", "900"],
 });
 
-const manrope = Manrope({
+const body = Barlow_Semi_Condensed({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+const mono = Share_Tech_Mono({
+  variable: "--font-hud",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: "400",
+});
+
+const typewriter = Special_Elite({
+  variable: "--font-type",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -27,16 +37,25 @@ export const metadata: Metadata = {
     "IT Specialist & Consultant | Software Developer | Cybersecurity Enthusiast",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0b0d0a",
+};
+
+// Runs before first paint so the cold open never flashes the page underneath,
+// and so reveal animations only hide content when JS can bring it back.
+const bootScript = `(function(){var r=document.documentElement;r.classList.add('js');try{if(!sessionStorage.getItem('sk-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash&&!location.search&&location.pathname==='/')r.classList.add('intro')}catch(e){}})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${manrope.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
+      suppressHydrationWarning
+      className={`${display.variable} ${body.variable} ${mono.variable} ${typewriter.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full font-[family-name:var(--font-body)]">
-        <TargetCursorProvider />
-        {children}
-      </body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+      </head>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

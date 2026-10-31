@@ -1,33 +1,35 @@
-import { Header } from "@/components/portfolio/Header";
+import { ColdOpen } from "@/components/portfolio/ColdOpen";
+import { Hud } from "@/components/portfolio/Hud";
+import { Fx } from "@/components/portfolio/Fx";
 import { Hero } from "@/components/portfolio/Hero";
-import { About } from "@/components/portfolio/About";
-import { Skills } from "@/components/portfolio/Skills";
-import { Experience } from "@/components/portfolio/Experience";
-import { Projects } from "@/components/portfolio/Projects";
-import { Certifications } from "@/components/portfolio/Certifications";
-import { Activities } from "@/components/portfolio/Activities";
-import { Contact } from "@/components/portfolio/Contact";
-import { StatusBar } from "@/components/portfolio/StatusBar";
+import { Dossier } from "@/components/portfolio/Dossier";
+import { Loadout } from "@/components/portfolio/Loadout";
+import { Campaign } from "@/components/portfolio/Campaign";
+import { Missions } from "@/components/portfolio/Missions";
+import { Commendations } from "@/components/portfolio/Commendations";
+import { SideOps } from "@/components/portfolio/SideOps";
+import { Comms } from "@/components/portfolio/Comms";
+import { Scoreboard } from "@/components/portfolio/Scoreboard";
 import { Footer } from "@/components/portfolio/Footer";
-import { WavesBackground } from "@/components/portfolio/WavesBackground";
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-[var(--color-on-surface-variant)] relative pb-10 bg-transparent">
-      <WavesBackground />
-      <Header />
-      <main className="relative z-10 pt-24 pb-14">
+    <>
+      <ColdOpen />
+      <Fx />
+      <Hud />
+      <main className="relative">
         <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Certifications />
-        <Activities />
-        <Contact />
+        <Dossier />
+        <Loadout />
+        <Campaign />
+        <Missions />
+        <Commendations />
+        <SideOps />
+        <Comms />
+        <Scoreboard />
       </main>
       <Footer />
-      <StatusBar />
-    </div>
+    </>
   );
 }

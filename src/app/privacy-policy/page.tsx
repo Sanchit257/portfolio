@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/portfolio/Footer";
-import { WavesBackground } from "@/components/portfolio/WavesBackground";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Sanchit Kaushik",
@@ -25,26 +24,16 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen text-[var(--color-on-surface-variant)] relative bg-transparent">
-      <WavesBackground />
-      <main className="relative z-10 max-w-3xl mx-auto px-6 md:px-8 py-24 md:py-32">
-        <Link
-          href="/"
-          className="inline-block mb-10 font-mono text-xs tracking-widest uppercase text-[var(--color-neon-cyan)] hover:text-white transition-colors"
-        >
+    <div className="legal-page">
+      <main className="wrap max-w-3xl py-24 md:py-32">
+        <Link href="/" className="legal-back">
           ← Back to portfolio
         </Link>
-
-        <h1 className="text-4xl md:text-5xl font-[family-name:var(--font-display)] font-black text-white uppercase tracking-tight mb-12">
-          Privacy Policy
-        </h1>
-
-        <div className="space-y-10 font-[family-name:var(--font-body)] text-base md:text-lg leading-relaxed">
+        <h1 className="legal-title">Privacy Policy</h1>
+        <div className="space-y-10 text-lg leading-relaxed">
           {sections.map((section) => (
             <section key={section.title}>
-              <h2 className="font-[family-name:var(--font-display)] font-bold text-white text-xl mb-4">
-                {section.title}
-              </h2>
+              <h2 className="legal-heading">{section.title}</h2>
               <p>{section.body}</p>
             </section>
           ))}
