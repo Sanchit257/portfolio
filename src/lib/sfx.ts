@@ -17,7 +17,8 @@ export function subscribeSfx(listener: () => void) {
 export function toggleSfx() {
   enabled = !enabled;
   listeners.forEach((listener) => listener());
-  if (enabled) playSfx("xp");
+  // The intro has its own soundtrack, so skip the confirmation chime there.
+  if (enabled && !document.documentElement.classList.contains("intro")) playSfx("xp");
 }
 
 function tone(

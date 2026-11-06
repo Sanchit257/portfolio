@@ -42,9 +42,11 @@ export const viewport: Viewport = {
   themeColor: "#0b0d0a",
 };
 
-// Runs before first paint so the cold open never flashes the page underneath,
+// Runs before first paint so the intro never flashes the page underneath,
 // and so reveal animations only hide content when JS can bring it back.
-const bootScript = `(function(){var r=document.documentElement;r.classList.add('js');try{if(!sessionStorage.getItem('sk-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash&&!location.search&&location.pathname==='/')r.classList.add('intro')}catch(e){}})()`;
+// html.intro: play the intro this page view (once a session, home page only).
+// html.intro-still: reduced motion or Save-Data, so show the static poster.
+const bootScript = `(function(){var r=document.documentElement;r.classList.add('js');try{if(!sessionStorage.getItem('sk-intro')&&!location.hash&&!location.search&&location.pathname==='/'){r.classList.add('intro');var c=navigator.connection;if(matchMedia('(prefers-reduced-motion: reduce)').matches||(c&&c.saveData))r.classList.add('intro-still')}}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
