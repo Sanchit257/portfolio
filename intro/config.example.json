@@ -1,0 +1,6 @@
+{
+  "blender": "/Applications/Blender.app/Contents/MacOS/Blender",
+  "ffmpeg": "ffmpeg",
+  "renderScale": 100,
+  "samples": 24
+}

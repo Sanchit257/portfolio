@@ -1,4 +1,4 @@
-import { ColdOpen } from "@/components/portfolio/ColdOpen";
+import { Intro } from "@/components/intro/Intro";
 import { Hud } from "@/components/portfolio/Hud";
 import { Fx } from "@/components/portfolio/Fx";
 import { Hero } from "@/components/portfolio/Hero";
@@ -16,7 +16,7 @@ import { Rail } from "@/components/portfolio/Rail";
 export default function Home() {
   return (
     <>
-      <ColdOpen />
+      <Intro />
       <Fx />
       <Hud />
       <Rail>
